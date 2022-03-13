@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>System Monitor</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <div class="box">
+      <span class="label">CPU Cores (#)</span>
+      <span id="cpu-count">-</span>
+    </div>
+    <div class="box">
+      <span class="label">CPU Frequency (Hz)</span>
+      <span id="cpu-freq">-</span>
+    </div>
+    <div class="box">
+      <span class="label">CPU (%)</span>
+      <span id="cpu">-</span>
+    </div>
+    <div class="box">
+      <span class="label">Used Mem (GB)</span>
+      <span id="umem">-</span>
+    </div>
+    <div class="box">
+      <span class="label">Available Mem (GB)</span>
+      <span id="amem">-</span>
+    </div>
+    <div class="box">
+      <span class="label">Total Mem (GB)</span>
+      <span id="total-mem">-</span>
+    </div>
+    <script>
+      const electron = require('electron');
+      const ipcRenderer = electron.ipcRenderer;
+      ipcRenderer.on('cpu-count',(event,data) => {
+    document.getElementById('cpu-count').innerHTML = data;
+  });
+  ipcRenderer.on('cpu-freq',(event,data) => {
+    document.getElementById('cpu-freq').innerHTML = data;
+  });
+      ipcRenderer.on('cpu',(event,data) => {
+    document.getElementById('cpu').innerHTML = data.toFixed(2);
+  });
+  ipcRenderer.on('umem',(event,data) => {
+    document.getElementById('umem').innerHTML = data.toFixed(2);
+  });
+  ipcRenderer.on('amem',(event,data) => {
+    document.getElementById('amem').innerHTML = data.toFixed(2);
+  });
+  ipcRenderer.on('total-mem',(event,data) => {
+    document.getElementById('total-mem').innerHTML = data.toFixed(2);
+  });
+    </script>
+  </body>
+</html>
